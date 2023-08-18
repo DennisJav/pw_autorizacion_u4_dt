@@ -20,7 +20,7 @@ public class UsuarioRepoImpl implements IUsuarioRepository {
     public Usuario consultarUsuario(String userName) {
 
         TypedQuery<Usuario> myQuery = this.entityManager
-                .createQuery("Select e from Estudiante e Where e.userName = :dato", Usuario.class);
+                .createQuery("Select e from Usuario e Where e.userName = :dato", Usuario.class);
         myQuery.setParameter("dato", userName);
 
         return myQuery.getSingleResult();

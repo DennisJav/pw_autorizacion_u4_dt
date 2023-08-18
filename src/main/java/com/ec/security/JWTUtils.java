@@ -19,13 +19,15 @@ public class JWTUtils {
     @Value("${app.jwt.expiration.ms}")
     private Integer jwtExpiration;
 
-    public String generateJwtToken(Authentication authentication, String nombre){
+    public String generateJwtToken(String userName){
         //el tiempo de expiracion en un archivo de configurcion y en milisegundos
         LOG.info("semilla"+jwtSecret);
         LOG.info("tiempo: "+jwtExpiration);
-        return Jwts.builder().setSubject(nombre).setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis()+this.jwtExpiration))
-                .signWith(SignatureAlgorithm.HS512,this.jwtSecret).compact();
+        return Jwts.builder().setSubject(userName).setIssuedAt(new Date())
+
+                .setExpiration(new Date(System.currentTimeMillis() + this.jwtExpiration))
+
+                .signWith(SignatureAlgorithm.HS512, this.jwtSecret).compact();
     }
 
 }
