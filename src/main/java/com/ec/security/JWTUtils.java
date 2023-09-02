@@ -18,33 +18,33 @@ public class JWTUtils {
     private static final Logger LOG= LoggerFactory.getLogger(JWTUtils.class);
     @Value("${app.jwt.secret}")
     private String jwtSecret;
-//    @Value("${app.jwt.expiration.ms}")
-//    private Integer jwtExpiration;
-//
-//    public String generateJwtToken(String userName){
-//        //el tiempo de expiracion en un archivo de configurcion y en milisegundos
-//        LOG.info("semilla"+jwtSecret);
-//        LOG.info("tiempo: "+jwtExpiration);
-//        return Jwts.builder().setSubject(userName).setIssuedAt(new Date())
-//
-//                .setExpiration(new Date(System.currentTimeMillis() + this.jwtExpiration))
-//
-//                .signWith(SignatureAlgorithm.HS512, this.jwtSecret).compact();
-//    }
+    @Value("${app.jwt.expiration}")
+    private Integer jwtExpiration;
 
+    public String generateJwtToken(String userName,String semilla, Integer tiempoVigencia){
+        //el tiempo de expiracion en un archivo de configurcion y en milisegundos
+        LOG.info("semilla"+jwtSecret);
+        LOG.info("tiempo: "+jwtExpiration);
+        return Jwts.builder().setSubject(userName).setIssuedAt(new Date())
 
-    @Value("${app.jwt.expiration.ms}")
-    public boolean validateJwtToken(String token){
-        try {
-            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
-            return true;
-        }catch (ExpiredJwtException e){
-            LOG.error("Token expirado", e.getMessage());
-        }catch (SignatureException e){
-            LOG.error("Token invalido", e.getMessage());
-        }
+                .setExpiration(new Date(System.currentTimeMillis() + tiempoVigencia))
 
-        return false;
+                .signWith(SignatureAlgorithm.HS512, semilla).compact();
     }
+
+
+//    @Value("${app.jwt.expiration.ms}")
+//    public boolean validateJwtToken(String token){
+//        try {
+//            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
+//            return true;
+//        }catch (ExpiredJwtException e){
+//            LOG.error("Token expirado", e.getMessage());
+//        }catch (SignatureException e){
+//            LOG.error("Token invalido", e.getMessage());
+//        }
+//
+//        return false;
+//    }
 
 }

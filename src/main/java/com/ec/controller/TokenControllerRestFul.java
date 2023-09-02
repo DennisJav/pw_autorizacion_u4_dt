@@ -24,8 +24,10 @@ public class TokenControllerRestFul {
     @GetMapping("/obtener")
     private String obtenerToken(@RequestBody UsuarioTO user){
         this.authenticated(user.getUserName(), user.getPasword());
-        return this.jwtUtil.generateJwtToken(user.getUserName());
+        return this.jwtUtil.generateJwtToken(user.getUserName(),user.getSemilla(),user.getTiempoVigencia());
     }
+
+
 
     private void authenticated(String usuario, String pasword){
         Authentication authentication = this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(usuario, pasword));
